@@ -3,5 +3,17 @@
 .number {
     font-family: 'Bruno Ace SC', cursive;
     font-size: 10rem;
+    width: 145px;
+}
+
+.separator {
+    width: 80px;
+}
+
+.lightRed {
     color: rgb(215, 37, 37);
+}
+
+.darkRed {
+    color: rgb(141, 25, 25);
 }
