@@ -1,25 +1,29 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
+import Number from './components/Number/Number';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [ seconds, setSeconds ] = useState(0);
+    const [ minutes, setMinutes ] = useState(0);
+
+    if(seconds === 60) {
+        setMinutes(minutes + 1);
+        setSeconds(0);
+    }
+
+    setTimeout(() => {
+        setSeconds(seconds + 1);
+    }, 1000);
+
+    return (
+        <div className="App">
+            <section className='stopwatch-section'>
+                <Number text = { minutes } />
+                <Number text = { ":" } />
+                <Number text = { seconds } />
+            </section>
+        </div>
+    );
 }
 
 export default App;

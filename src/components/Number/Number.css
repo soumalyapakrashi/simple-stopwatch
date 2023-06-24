@@ -1,0 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&display=swap');
+
+.number {
+    font-family: 'Bruno Ace SC', cursive;
+    font-size: 10rem;
+    color: rgb(215, 37, 37);
+}
