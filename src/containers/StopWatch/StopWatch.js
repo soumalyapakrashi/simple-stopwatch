@@ -8,14 +8,15 @@ export function StopWatch() {
     const [ darkSeparator, setDarkSepartor ] = useState(true);
     const [ halfSecond, setHalfSecond ] = useState(true);
 
-    if(seconds === 60) {
-        setMinutes(minutes + 1);
-        setSeconds(0);
-    }
-
     setTimeout(() => {
         if(!halfSecond) {
-            setSeconds(seconds + 1);
+            if(seconds === 59) {
+                setMinutes(minutes + 1);
+                setSeconds(0);
+            }
+            else {
+                setSeconds(seconds + 1);
+            }
         }
         
         setDarkSepartor(!darkSeparator);
