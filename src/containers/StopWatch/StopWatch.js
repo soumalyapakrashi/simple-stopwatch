@@ -17,6 +17,11 @@ export function StopWatch() {
                 setMinutes(previousMinutes => previousMinutes + 1);
                 setSeconds(0);
             }
+
+            if(minutes === 60) {
+                setMinutes(0);
+                setSeconds(0);
+            }
     
             const interval = setInterval(() => {
                 if(!darkSeparator) {
@@ -30,7 +35,7 @@ export function StopWatch() {
     
             return () => clearInterval(interval);
         }
-    }, [ darkSeparator, enableStopWatch, seconds ]);
+    }, [ darkSeparator, enableStopWatch, seconds, minutes ]);
 
     // Handler function to start the counter
     const startStopWatch = () => {
