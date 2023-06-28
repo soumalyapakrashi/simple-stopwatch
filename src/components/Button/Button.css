@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+
+button {
+    padding: 15px 35px;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-alert {
+    background-color: rgb(192, 17, 17);
+    color: white;
+}
+
+.btn-success {
+    background-color: rgb(36, 149, 36);
+    color: white;
+}
+
+.btn-primary {
+    background-color: rgb(42, 42, 176);
+    color: white;
+}
+
+.btn-secondary {
+    background-color: rgb(79, 79, 79);
+    color: white;
+}
+
+.btn-alert:hover {
+    background-color: rgb(170, 17, 17);
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: rgb(36, 130, 36);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: rgb(42, 42, 146);
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: rgb(67, 67, 67);
+    color: white;
+}
