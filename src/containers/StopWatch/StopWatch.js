@@ -1,36 +1,33 @@
 import "./StopWatch.css";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Number } from '../../components';
 
 export function StopWatch() {
     const [ seconds, setSeconds ] = useState(0);
     const [ minutes, setMinutes ] = useState(0);
     const [ darkSeparator, setDarkSepartor ] = useState(true);
-    const [ halfSecond, setHalfSecond ] = useState(true);
     const [ enableStopWatch, setEnableStopWatch ] = useState(false);
 
-
-    // Timeout function to update the counter every 500 milliseconds
-    const timeoutVar = setTimeout(() => {
+    useEffect(() => {
         if(enableStopWatch) {
-            if(!halfSecond) {
-                if(seconds === 59) {
-                    setMinutes(minutes + 1);
-                    setSeconds(0);
+            if(seconds === 60) {
+                setMinutes(previousMinutes => previousMinutes + 1);
+                setSeconds(0);
+            }
+    
+            const interval = setInterval(() => {
+                if(!darkSeparator) {
+                    setDarkSepartor(true);
+                    setSeconds(previousSeconds => previousSeconds + 1);
                 }
                 else {
-                    setSeconds(seconds + 1, () => {
-                        if(!enableStopWatch) {
-                            seconds = 0;
-                        }
-                    });
+                    setDarkSepartor(false);
                 }
-            }
-            
-            setDarkSepartor(!darkSeparator);
-            setHalfSecond(!halfSecond);
+            }, 500);
+    
+            return () => clearInterval(interval);
         }
-    }, 500);
+    }, [ darkSeparator, enableStopWatch, seconds ]);
 
     // Handler function to start the counter
     const startStopWatch = () => {
@@ -40,17 +37,14 @@ export function StopWatch() {
     // Handler function to pause the counter
     const pauseStopWatch = () => {
         setEnableStopWatch(false);
-        setHalfSecond(true);
     }
 
     // Handler function to stop the counter
     const stopStopWatch = () => {
         setEnableStopWatch(false);
-        setHalfSecond(true);
         setSeconds(0);
         setMinutes(0);
         setDarkSepartor(true);
-        clearTimeout(timeoutVar);
     }
 
     return (
