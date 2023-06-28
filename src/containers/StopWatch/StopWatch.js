@@ -17,10 +17,10 @@ export function StopWatch() {
     // separator will be taking.
     const [ darkSeparator, setDarkSepartor ] = useState(true);
     // This enables or disables the counter of the stopwatch
-    const [ enableStopWatch, setEnableStopWatch ] = useState(false);
+    const [ enableStopWatch, setEnableStopWatch ] = useState("Stopped");
 
     useEffect(() => {
-        if(enableStopWatch) {
+        if(enableStopWatch === "Started") {
             // Increment minutes by 1 and reset seconds to 0 if 60 seconds is reached
             if(seconds === 60) {
                 setMinutes(previousMinutes => previousMinutes + 1);
@@ -53,17 +53,17 @@ export function StopWatch() {
 
     // Handler function to start the counter
     const startStopWatch = () => {
-        setEnableStopWatch(true);
+        setEnableStopWatch("Started");
     }
 
     // Handler function to pause the counter
     const pauseStopWatch = () => {
-        setEnableStopWatch(false);
+        setEnableStopWatch("Paused");
     }
 
     // Handler function to stop the counter
     const stopStopWatch = () => {
-        setEnableStopWatch(false);
+        setEnableStopWatch("Stopped");
         setSeconds(0);
         setMinutes(0);
         setDarkSepartor(true);
@@ -96,24 +96,14 @@ export function StopWatch() {
             </div>
 
             <div className="buttons">
-                <Button 
-                    text="Start"
-                    buttonCategory="btn-icon btn-success"
-                    onClick={ startStopWatch }
-                    iconUrl={ playLogo }
+                <Button
+                    buttonCategory={ enableStopWatch === "Started" ? "btn-icon btn-secondary" : "btn-icon btn-success" }
+                    onClick={ enableStopWatch !== "Started" ? startStopWatch : pauseStopWatch }
+                    iconUrl={ enableStopWatch === "Started" ? pauseLogo : playLogo }
                     displayChoice="icon"
-                    altText="Play Button"
+                    altText={ enableStopWatch === "Started" ? "Pause Button" : "Start Button" }
                 />
                 <Button
-                    text="Pause"
-                    buttonCategory="btn-icon btn-secondary"
-                    onClick={ pauseStopWatch }
-                    iconUrl={  pauseLogo }
-                    displayChoice='icon'
-                    altText="Pause Button"
-                />
-                <Button
-                    text="Stop"
                     buttonCategory="btn-icon btn-alert"
                     onClick={ stopStopWatch }
                     iconUrl={ stopLogo }
