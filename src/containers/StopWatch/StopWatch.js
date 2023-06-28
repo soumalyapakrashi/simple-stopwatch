@@ -1,6 +1,9 @@
-import "./StopWatch.css";
 import { useEffect, useState } from 'react';
 import { Button, Number } from '../../components';
+import "./StopWatch.css";
+import playLogo from '../../assets/svg/play-solid.svg';
+import pauseLogo from '../../assets/svg/pause-solid.svg';
+import stopLogo from '../../assets/svg/stop-solid.svg';
 
 export function StopWatch() {
     const [ seconds, setSeconds ] = useState(0);
@@ -76,18 +79,27 @@ export function StopWatch() {
             <div className="buttons">
                 <Button 
                     text="Start"
-                    buttonCategory="btn-success"
+                    buttonCategory="btn-icon btn-success"
                     onClick={ startStopWatch }
+                    iconUrl={ playLogo }
+                    displayChoice="icon"
+                    altText="Play Button"
                 />
                 <Button
                     text="Pause"
-                    buttonCategory="btn-secondary"
+                    buttonCategory="btn-icon btn-secondary"
                     onClick={ pauseStopWatch }
+                    iconUrl={  pauseLogo }
+                    displayChoice='icon'
+                    altText="Pause Button"
                 />
                 <Button
                     text="Stop"
-                    buttonCategory="btn-alert"
+                    buttonCategory="btn-icon btn-alert"
                     onClick={ stopStopWatch }
+                    iconUrl={ stopLogo }
+                    displayChoice='icon'
+                    altText="Stop Button"
                 />
             </div>
         </section>

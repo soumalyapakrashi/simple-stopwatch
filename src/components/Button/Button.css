@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
 
-button {
+.btn {
     padding: 15px 35px;
     font-family: 'Noto Sans', sans-serif;
     font-size: 1.1rem;
@@ -47,4 +47,23 @@ button {
 .btn-secondary:hover {
     background-color: rgb(67, 67, 67);
     color: white;
+}
+
+.btn-icon {
+    padding: 15px 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+}
+
+.icon {
+    height: 25px;
+    width: 25px;
+    filter: invert(100%);
+}
+
+.btn-icon:active .icon {
+    filter: invert(50%);
 }
