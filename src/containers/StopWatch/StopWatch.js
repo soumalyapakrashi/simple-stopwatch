@@ -102,6 +102,8 @@ export function StopWatch() {
                     iconUrl={ enableStopWatch === "Started" ? pauseLogo : playLogo }
                     displayChoice="icon"
                     altText={ enableStopWatch === "Started" ? "Pause Button" : "Start Button" }
+                    width='110px'
+                    height='55px'
                 />
                 <Button
                     buttonCategory="btn-icon btn-alert"
@@ -109,6 +111,8 @@ export function StopWatch() {
                     iconUrl={ stopLogo }
                     displayChoice='icon'
                     altText="Stop Button"
+                    width='110px'
+                    height='55px'
                 />
             </div>
         </section>
