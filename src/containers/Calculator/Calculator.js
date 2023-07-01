@@ -7,7 +7,7 @@ export function Calculator() {
     const [ symbolStack, setSymbolStack ] = useState(['Start']);
 
     const buttons = [ 'AC', 'C', '%', '÷', '7', '8', '9', 'X', '4', '5', '6', '-', '1', '2', '3', '+', '0', '.', '=' ];
-
+    
     const buttons_map = {
         'AC': () => {
             setExpression('');
@@ -23,10 +23,7 @@ export function Calculator() {
             }
             else if(expression !== '') {
                 setExpression(previousExpression => previousExpression.substring(0, previousExpression.length - 1));
-                setSymbolStack(stack => {
-                    stack.pop();
-                    return stack;
-                })
+                setSymbolStack(stack => stack.slice(0, stack.length - 1));
             }
         },
         '%': () => {
@@ -45,7 +42,7 @@ export function Calculator() {
 
             setSymbolStack(stack => {
                 if(lastStackElement !== 'Operator' && lastStackElement !== 'Clear' && expression !== '') {
-                    stack.push('Operator');
+                    stack = [...stack, 'Operator'];
                 }
                 return stack;
             });
@@ -66,7 +63,7 @@ export function Calculator() {
 
             setSymbolStack(stack => {
                 if(lastStackElement !== 'Operator' && lastStackElement !== 'Clear' && expression !== '') {
-                    stack.push('Operator');
+                    stack = [...stack, 'Operator'];
                 }
                 return stack;
             });
@@ -90,10 +87,10 @@ export function Calculator() {
                 setExpression(previousExpression => `${previousExpression}7`);
             }
             setSymbolStack(stack => {
-                if(lastStackElement === 'Start') {
+                if(lastStackElement === 'Clear') {
                     stack = ['Start'];
                 }
-                stack.push('Number');
+                stack = [...stack, 'Number'];
                 return stack;
             });
         },
@@ -119,7 +116,7 @@ export function Calculator() {
                 if(lastStackElement === 'Clear') {
                     stack = ['Start'];
                 }
-                stack.push('Number');
+                stack = [...stack, 'Number'];
                 return stack;
             });
         },
@@ -145,7 +142,7 @@ export function Calculator() {
                 if(lastStackElement === 'Clear') {
                     stack = ['Start'];
                 }
-                stack.push('Number');
+                stack = [...stack, 'Number'];
                 return stack;
             });
         },
@@ -165,7 +162,7 @@ export function Calculator() {
 
             setSymbolStack(stack => {
                 if(lastStackElement !== 'Operator' && lastStackElement !== 'Clear' && expression !== '') {
-                    stack.push('Operator');
+                    stack = [...stack, 'Operator'];
                 }
                 return stack;
             })
@@ -192,7 +189,7 @@ export function Calculator() {
                 if(lastStackElement === 'Clear') {
                     stack = ['Start'];
                 }
-                stack.push('Number');
+                stack = [...stack, 'Number'];
                 return stack;
             });
         },
@@ -219,7 +216,7 @@ export function Calculator() {
                 if(lastStackElement === 'Clear') {
                     stack = ['Start'];
                 }
-                stack.push('Number');
+                stack = [...stack, 'Number'];
                 return stack;
             });
         },
@@ -246,7 +243,7 @@ export function Calculator() {
                 if(lastStackElement === 'Clear') {
                     stack = ['Start'];
                 }
-                stack.push('Number');
+                stack = [...stack, 'Number'];
                 return stack;
             });
         },
@@ -254,7 +251,7 @@ export function Calculator() {
             const lastStackElement = symbolStack[symbolStack.length - 1];
             if(lastStackElement === 'Clear') {
                 setExpression('-');
-                setSymbolStack(['Start']);
+                setSymbolStack(['Start', 'Operator']);
             }
             else {
                 setExpression(previousExpression => {
@@ -265,12 +262,14 @@ export function Calculator() {
                         return `${previousExpression}-`;
                     }
                 });
-            }
 
-            setSymbolStack(stack => {
-                stack.push('Operator');
-                return stack;
-            })
+                if(expression.at(expression.length - 1) !== '-') {
+                    setSymbolStack(stack => {
+                        stack = [...stack, 'Operator'];
+                        return stack;
+                    });
+                }
+            }
         },
         '1': () => {
             const lastStackElement = symbolStack[symbolStack.length - 1];
@@ -295,7 +294,7 @@ export function Calculator() {
                 if(lastStackElement === 'Clear') {
                     stack = ['Start'];
                 }
-                stack.push('Number');
+                stack = [...stack, 'Number'];
                 return stack;
             });
         },
@@ -321,7 +320,7 @@ export function Calculator() {
                 if(lastStackElement === 'Clear') {
                     stack = ['Start'];
                 }
-                stack.push('Number');
+                stack = [...stack, 'Number'];
                 return stack;
             });
         },
@@ -347,7 +346,7 @@ export function Calculator() {
                 if(lastStackElement === 'Clear') {
                     stack = ['Start'];
                 }
-                stack.push('Number');
+                stack = [...stack, 'Number'];
                 return stack;
             });
         },
@@ -367,7 +366,7 @@ export function Calculator() {
 
             setSymbolStack(stack => {
                 if(lastStackElement !== 'Operator' && lastStackElement !== 'Clear' && expression !== '') {
-                    stack.push('Operator');
+                    stack = [...stack, 'Operator'];
                 }
                 return stack;
             })
@@ -405,6 +404,7 @@ export function Calculator() {
             }
             if(lastStackElement === 'Clear') {
                 setExpression('.');
+                setSymbolStack(['Start', 'Point']);
             }
             else if(!pointPresent) {
                 setExpression(previousExpression => {
@@ -415,15 +415,9 @@ export function Calculator() {
                         return `${previousExpression}.`;
                     }
                 });
-            }
 
-            setSymbolStack(stack => {
-                if(lastStackElement === 'Clear') {
-                    stack = ['Start'];
-                }
-                stack.push('Point');
-                return stack;
-            });
+                setSymbolStack(stack => [...stack, 'Point']);
+            }
         },
         '=': () => {
             try {
@@ -447,7 +441,7 @@ export function Calculator() {
 
                     if(result === 'Infinity' || result === 'NaN') {
                         setSymbolStack(stack => {
-                            stack.push('Clear');
+                            stack = [...stack, 'Clear'];
                             return stack;
                         });
                     }
@@ -458,7 +452,7 @@ export function Calculator() {
                     else {
                         setExpression(result);
                         setSymbolStack(stack => {
-                            stack.push('Clear');
+                            stack = [...stack, 'Clear'];
                             return stack;
                         });
                     }
@@ -466,7 +460,7 @@ export function Calculator() {
             } catch(error) {
                 setExpression('Invalid');
                 setSymbolStack(stack => {
-                    stack.push('Clear');
+                    stack = [...stack, 'Clear'];
                     return stack;
                 });
             }
