@@ -477,61 +477,61 @@ export function Calculator() {
     const handleKeyboardEvents = event => {
         switch(event.key) {
             case '1': 
-                setExpression(previousExpression => `${previousExpression}1`);
+                buttons_map['1']();
                 break;
             case '2': 
-                setExpression(previousExpression => `${previousExpression}2`);
+                buttons_map['2']();
                 break;
             case '3':
-                setExpression(previousExpression => `${previousExpression}3`);
+                buttons_map['3']();
                 break;
             case '4':
-                setExpression(previousExpression => `${previousExpression}4`);
+                buttons_map['4']();
                 break;
             case '5':
-                setExpression(previousExpression => `${previousExpression}5`);
+                buttons_map['5']();
                 break;
             case '6':
-                setExpression(previousExpression => `${previousExpression}6`);
+                buttons_map['6']();
                 break;
             case '7':
-                setExpression(previousExpression => `${previousExpression}7`);
+                buttons_map['7']();
                 break;
             case '8':
-                setExpression(previousExpression => `${previousExpression}8`);
+                buttons_map['8']();
                 break;
             case '9':
-                setExpression(previousExpression => `${previousExpression}9`);
+                buttons_map['9']();
                 break;
             case '0':
-                setExpression(previousExpression => `${previousExpression}0`);
+                buttons_map['0']();
                 break;
             case '%':
-                setExpression(previousExpression => `${previousExpression}%`);
+                buttons_map['%']();
                 break;
             case '/':
-                setExpression(previousExpression => `${previousExpression}÷`);
+                buttons_map['÷']();
                 break;
             case '*':
-                setExpression(previousExpression => `${previousExpression}x`);
+                buttons_map['X']();
                 break;
             case '-':
-                setExpression(previousExpression => `${previousExpression}-`);
+                buttons_map['-']();
                 break;
             case '+':
-                setExpression(previousExpression => `${previousExpression}+`);
+                buttons_map['+']();
                 break;
             case '=':
                 buttons_map['=']();
                 break;
             case 'Delete':
-                setExpression('');
+                buttons_map['AC']();
                 break;
             case 'Backspace':
-                setExpression(previousExpression => previousExpression.substring(0, previousExpression.length - 1));
+                buttons_map['C']();
                 break;
             case '.':
-                setExpression(previousExpression => `${previousExpression}.`);
+                buttons_map['.']();
                 break;
             default: break;
         }
