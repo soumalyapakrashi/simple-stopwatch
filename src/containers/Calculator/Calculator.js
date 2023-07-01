@@ -7,7 +7,58 @@ export function Calculator() {
     const [ symbolStack, setSymbolStack ] = useState(['Start']);
 
     const buttons = [ 'AC', 'C', '%', '÷', '7', '8', '9', 'X', '4', '5', '6', '-', '1', '2', '3', '+', '0', '.', '=' ];
-    
+
+    // Handler function for numbers
+    const numbersHandler = number => {
+        const lastStackElement = symbolStack[symbolStack.length - 1];
+        if(lastStackElement === 'Clear') {
+            setExpression(number);
+        }
+        else if(lastStackElement === 'Start' || lastStackElement === 'Operator') {
+            setExpression(previousExpression => {
+                if(previousExpression.at(previousExpression.length - 1) === '0') {
+                    return `${previousExpression.substring(0, previousExpression.length - 1)}${number}`;
+                }
+                else {
+                    return `${previousExpression}${number}`;
+                }
+            });
+        }
+        else {
+            setExpression(previousExpression => `${previousExpression}${number}`);
+        }
+        setSymbolStack(stack => {
+            if(lastStackElement === 'Clear') {
+                stack = ['Start'];
+            }
+            stack = [...stack, 'Number'];
+            return stack;
+        });
+    }
+
+    // Handler function for operators
+    const operatorsHandler = operator => {
+        const lastStackElement = symbolStack[symbolStack.length - 1];
+        setExpression(previousExpression => {
+            if(lastStackElement === 'Operator' || lastStackElement === 'Clear') {
+                return `${previousExpression}`;
+            }
+            else if(expression === '') {
+                return '';
+            }
+            else {
+                return `${previousExpression}${operator}`;
+            }
+        });
+
+        setSymbolStack(stack => {
+            if(lastStackElement !== 'Operator' && lastStackElement !== 'Clear' && expression !== '') {
+                stack = [...stack, 'Operator'];
+            }
+            return stack;
+        });
+    }
+
     const buttons_map = {
         'AC': () => {
             setExpression('');
@@ -27,225 +78,31 @@ export function Calculator() {
             }
         },
         '%': () => {
-            const lastStackElement = symbolStack[symbolStack.length - 1];
-            setExpression(previousExpression => {
-                if(lastStackElement === 'Operator' || lastStackElement === 'Clear') {
-                    return `${previousExpression}`;
-                }
-                else if(expression === '') {
-                    return '';
-                }
-                else {
-                    return `${previousExpression}%`;
-                }
-            });
-
-            setSymbolStack(stack => {
-                if(lastStackElement !== 'Operator' && lastStackElement !== 'Clear' && expression !== '') {
-                    stack = [...stack, 'Operator'];
-                }
-                return stack;
-            });
+            operatorsHandler('%');
         },
         '÷': () => {
-            const lastStackElement = symbolStack[symbolStack.length - 1];
-            setExpression(previousExpression => {
-                if(lastStackElement === 'Operator' || lastStackElement === 'Clear') {
-                    return `${previousExpression}`;
-                }
-                else if(expression === '') {
-                    return '';
-                }
-                else {
-                    return `${previousExpression}÷`;
-                }
-            });
-
-            setSymbolStack(stack => {
-                if(lastStackElement !== 'Operator' && lastStackElement !== 'Clear' && expression !== '') {
-                    stack = [...stack, 'Operator'];
-                }
-                return stack;
-            });
+            operatorsHandler('÷');
         },
         '7': () => {
-            const lastStackElement = symbolStack[symbolStack.length - 1];
-            if(lastStackElement === 'Clear') {
-                setExpression('7');
-            }
-            else if(lastStackElement === 'Start' || lastStackElement === 'Operator') {
-                setExpression(previousExpression => {
-                    if(previousExpression.at(previousExpression.length - 1) === '0') {
-                        return `${previousExpression.substring(0, previousExpression.length - 1)}7`;
-                    }
-                    else {
-                        return `${previousExpression}7`;
-                    }
-                });
-            }
-            else {
-                setExpression(previousExpression => `${previousExpression}7`);
-            }
-            setSymbolStack(stack => {
-                if(lastStackElement === 'Clear') {
-                    stack = ['Start'];
-                }
-                stack = [...stack, 'Number'];
-                return stack;
-            });
+            numbersHandler('7');
         },
         '8': () => {
-            const lastStackElement = symbolStack[symbolStack.length - 1];
-            if(lastStackElement === 'Clear') {
-                setExpression('8');
-            }
-            else if(lastStackElement === 'Start' || lastStackElement === 'Operator') {
-                setExpression(previousExpression => {
-                    if(previousExpression.at(previousExpression.length - 1) === '0') {
-                        return `${previousExpression.substring(0, previousExpression.length - 1)}8`;
-                    }
-                    else {
-                        return `${previousExpression}8`;
-                    }
-                });
-            }
-            else {
-                setExpression(previousExpression => `${previousExpression}8`);
-            }
-            setSymbolStack(stack => {
-                if(lastStackElement === 'Clear') {
-                    stack = ['Start'];
-                }
-                stack = [...stack, 'Number'];
-                return stack;
-            });
+            numbersHandler('8');
         },
         '9': () => {
-            const lastStackElement = symbolStack[symbolStack.length - 1];
-            if(lastStackElement === 'Clear') {
-                setExpression('9');
-            }
-            else if(lastStackElement === 'Start' || lastStackElement === 'Operator') {
-                setExpression(previousExpression => {
-                    if(previousExpression.at(previousExpression.length - 1) === '0') {
-                        return `${previousExpression.substring(0, previousExpression.length - 1)}9`;
-                    }
-                    else {
-                        return `${previousExpression}9`;
-                    }
-                });
-            }
-            else {
-                setExpression(previousExpression => `${previousExpression}9`);
-            }
-            setSymbolStack(stack => {
-                if(lastStackElement === 'Clear') {
-                    stack = ['Start'];
-                }
-                stack = [...stack, 'Number'];
-                return stack;
-            });
+            numbersHandler('9');
         },
         'X': () => {
-            const lastStackElement = symbolStack[symbolStack.length - 1];
-            setExpression(previousExpression => {
-                if(lastStackElement === 'Operator' || lastStackElement === 'Clear') {
-                    return `${previousExpression}`;
-                }
-                else if(expression === '') {
-                    return '';
-                }
-                else {
-                    return `${previousExpression}x`;
-                }
-            });
-
-            setSymbolStack(stack => {
-                if(lastStackElement !== 'Operator' && lastStackElement !== 'Clear' && expression !== '') {
-                    stack = [...stack, 'Operator'];
-                }
-                return stack;
-            })
+            operatorsHandler('x');
         },
         '4': () => {
-            const lastStackElement = symbolStack[symbolStack.length - 1];
-            if(lastStackElement === 'Clear') {
-                setExpression('4');
-            }
-            else if(lastStackElement === 'Start' || lastStackElement === 'Operator') {
-                setExpression(previousExpression => {
-                    if(previousExpression.at(previousExpression.length - 1) === '0') {
-                        return `${previousExpression.substring(0, previousExpression.length - 1)}4`;
-                    }
-                    else {
-                        return `${previousExpression}4`;
-                    }
-                });
-            }
-            else {
-                setExpression(previousExpression => `${previousExpression}4`);
-            }
-            setSymbolStack(stack => {
-                if(lastStackElement === 'Clear') {
-                    stack = ['Start'];
-                }
-                stack = [...stack, 'Number'];
-                return stack;
-            });
+            numbersHandler('4');
         },
         '5': () => {
-            const lastStackElement = symbolStack[symbolStack.length - 1];
-            if(lastStackElement === 'Clear') {
-                setExpression('5');
-            }
-            else if(lastStackElement === 'Start' || lastStackElement === 'Operator') {
-                setExpression(previousExpression => {
-                    if(previousExpression.at(previousExpression.length - 1) === '0') {
-                        return `${previousExpression.substring(0, previousExpression.length - 1)}5`;
-                    }
-                    else {
-                        return `${previousExpression}5`;
-                    }
-                });
-            }
-            else {
-                setExpression(previousExpression => `${previousExpression}5`);
-            }
-
-            setSymbolStack(stack => {
-                if(lastStackElement === 'Clear') {
-                    stack = ['Start'];
-                }
-                stack = [...stack, 'Number'];
-                return stack;
-            });
+            numbersHandler('5');
         },
         '6': () => {
-            const lastStackElement = symbolStack[symbolStack.length - 1];
-            if(lastStackElement === 'Clear') {
-                setExpression('6');
-            }
-            else if(lastStackElement === 'Start' || lastStackElement === 'Operator') {
-                setExpression(previousExpression => {
-                    if(previousExpression.at(previousExpression.length - 1) === '0') {
-                        return `${previousExpression.substring(0, previousExpression.length - 1)}6`;
-                    }
-                    else {
-                        return `${previousExpression}6`;
-                    }
-                });
-            }
-            else {
-                setExpression(previousExpression => `${previousExpression}6`);
-            }
-
-            setSymbolStack(stack => {
-                if(lastStackElement === 'Clear') {
-                    stack = ['Start'];
-                }
-                stack = [...stack, 'Number'];
-                return stack;
-            });
+            numbersHandler('6');
         },
         '-': () => {
             const lastStackElement = symbolStack[symbolStack.length - 1];
@@ -272,104 +129,16 @@ export function Calculator() {
             }
         },
         '1': () => {
-            const lastStackElement = symbolStack[symbolStack.length - 1];
-            if(lastStackElement === 'Clear') {
-                setExpression('1');
-            }
-            else if(lastStackElement === 'Start' || lastStackElement === 'Operator') {
-                setExpression(previousExpression => {
-                    if(previousExpression.at(previousExpression.length - 1) === '0') {
-                        return `${previousExpression.substring(0, previousExpression.length - 1)}1`;
-                    }
-                    else {
-                        return `${previousExpression}1`;
-                    }
-                });
-            }
-            else {
-                setExpression(previousExpression => `${previousExpression}1`);
-            }
-
-            setSymbolStack(stack => {
-                if(lastStackElement === 'Clear') {
-                    stack = ['Start'];
-                }
-                stack = [...stack, 'Number'];
-                return stack;
-            });
+            numbersHandler('1');
         },
         '2': () => {
-            const lastStackElement = symbolStack[symbolStack.length - 1];
-            if(lastStackElement === 'Clear') {
-                setExpression('2');
-            }
-            else if(lastStackElement === 'Start' || lastStackElement === 'Operator') {
-                setExpression(previousExpression => {
-                    if(previousExpression.at(previousExpression.length - 1) === '0') {
-                        return `${previousExpression.substring(0, previousExpression.length - 1)}2`;
-                    }
-                    else {
-                        return `${previousExpression}2`;
-                    }
-                });
-            }
-            else {
-                setExpression(previousExpression => `${previousExpression}2`);
-            }
-            setSymbolStack(stack => {
-                if(lastStackElement === 'Clear') {
-                    stack = ['Start'];
-                }
-                stack = [...stack, 'Number'];
-                return stack;
-            });
+            numbersHandler('2');
         },
         '3': () => {
-            const lastStackElement = symbolStack[symbolStack.length - 1];
-            if(lastStackElement === 'Clear') {
-                setExpression('3');
-            }
-            else if(lastStackElement === 'Start' || lastStackElement === 'Operator') {
-                setExpression(previousExpression => {
-                    if(previousExpression.at(previousExpression.length - 1) === '0') {
-                        return `${previousExpression.substring(0, previousExpression.length - 1)}3`;
-                    }
-                    else {
-                        return `${previousExpression}3`;
-                    }
-                });
-            }
-            else {
-                setExpression(previousExpression => `${previousExpression}3`);
-            }
-            setSymbolStack(stack => {
-                if(lastStackElement === 'Clear') {
-                    stack = ['Start'];
-                }
-                stack = [...stack, 'Number'];
-                return stack;
-            });
+            numbersHandler('3');
         },
         '+': () => {
-            const lastStackElement = symbolStack[symbolStack.length - 1];
-            setExpression(previousExpression => {
-                if(lastStackElement === 'Operator' || lastStackElement === 'Clear') {
-                    return `${previousExpression}`;
-                }
-                else if(expression === '') {
-                    return '';
-                }
-                else {
-                    return `${previousExpression}+`;
-                }
-            });
-
-            setSymbolStack(stack => {
-                if(lastStackElement !== 'Operator' && lastStackElement !== 'Clear' && expression !== '') {
-                    stack = [...stack, 'Operator'];
-                }
-                return stack;
-            })
+            operatorsHandler('+');
         },
         '0': () => {
             const lastStackElement = symbolStack[symbolStack.length - 1];
