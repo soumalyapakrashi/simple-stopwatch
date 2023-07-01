@@ -5,7 +5,7 @@ import './Calculator.css';
 export function Calculator() {
     const [ expression, setExpression ] = useState('');
 
-    const buttons = [ 'AC', '+/-', '%', '÷', '7', '8', '9', 'X', '4', '5', '6', '-', '1', '2', '3', '+', '0', '.', '=' ];
+    const buttons = [ 'AC', 'C', '%', '÷', '7', '8', '9', 'X', '4', '5', '6', '-', '1', '2', '3', '+', '0', '.', '=' ];
 
     const button_categories = {
         '%': 'operator',
@@ -20,15 +20,8 @@ export function Calculator() {
         'AC': () => {
             setExpression('');
         },
-        '+/-': () => {
-            setExpression(previousExpression => {
-                if(previousExpression.startsWith('-')) {
-                    return `${previousExpression.substring(1)}`;
-                }
-                else {
-                    return `-${previousExpression}`;
-                }
-            })
+        'C': () => {
+            setExpression(previousExpression => previousExpression.substring(0, previousExpression.length - 1));
         },
         '%': () => {
             setExpression(previousExpression => {
@@ -89,7 +82,7 @@ export function Calculator() {
         },
         '-': () => {
             setExpression(previousExpression => {
-                if(button_categories[previousExpression.at(previousExpression.length - 1)] === 'operator') {
+                if(previousExpression.at(previousExpression.length - 1) === '-') {
                     return `${previousExpression}`;
                 }
                 else {
