@@ -7,6 +7,15 @@ export function Calculator() {
 
     const buttons = [ 'AC', '+/-', '%', '÷', '7', '8', '9', 'X', '4', '5', '6', '-', '1', '2', '3', '+', '0', '.', '=' ];
 
+    const button_categories = {
+        '%': 'operator',
+        '÷': 'operator',
+        'x': 'operator',
+        '-': 'operator',
+        '+': 'operator',
+        '.': 'operator'
+    }
+
     const buttons_map = {
         'AC': () => {
             setExpression('');
@@ -22,10 +31,30 @@ export function Calculator() {
             })
         },
         '%': () => {
-            setExpression(previousExpression => `${previousExpression}%`);
+            setExpression(previousExpression => {
+                if(button_categories[previousExpression.at(previousExpression.length - 1)] === 'operator') {
+                    return `${previousExpression}`;
+                }
+                else if(expression === '') {
+                    return '';
+                }
+                else {
+                    return `${previousExpression}%`;
+                }
+            });
         },
         '÷': () => {
-            setExpression(previousExpression => `${previousExpression}÷`);
+            setExpression(previousExpression => {
+                if(button_categories[previousExpression.at(previousExpression.length - 1)] === 'operator') {
+                    return `${previousExpression}`;
+                }
+                else if(expression === '') {
+                    return '';
+                }
+                else {
+                    return `${previousExpression}÷`;
+                }
+            });
         },
         '7': () => {
             setExpression(previousExpression => `${previousExpression}7`);
@@ -37,7 +66,17 @@ export function Calculator() {
             setExpression(previousExpression => `${previousExpression}9`);
         },
         'X': () => {
-            setExpression(previousExpression => `${previousExpression}x`);
+            setExpression(previousExpression => {
+                if(button_categories[previousExpression.at(previousExpression.length - 1)] === 'operator') {
+                    return `${previousExpression}`;
+                }
+                else if(expression === '') {
+                    return '';
+                }
+                else {
+                    return `${previousExpression}x`;
+                }
+            });
         },
         '4': () => {
             setExpression(previousExpression => `${previousExpression}4`);
@@ -49,7 +88,14 @@ export function Calculator() {
             setExpression(previousExpression => `${previousExpression}6`);
         },
         '-': () => {
-            setExpression(previousExpression => `${previousExpression}-`);
+            setExpression(previousExpression => {
+                if(button_categories[previousExpression.at(previousExpression.length - 1)] === 'operator') {
+                    return `${previousExpression}`;
+                }
+                else {
+                    return `${previousExpression}-`;
+                }
+            });
         },
         '1': () => {
             setExpression(previousExpression => `${previousExpression}1`);
@@ -61,27 +107,48 @@ export function Calculator() {
             setExpression(previousExpression => `${previousExpression}3`);
         },
         '+': () => {
-            setExpression(previousExpression => `${previousExpression}+`);
+            setExpression(previousExpression => {
+                if(button_categories[previousExpression.at(previousExpression.length - 1)] === 'operator') {
+                    return `${previousExpression}`;
+                }
+                else if(expression === '') {
+                    return '';
+                }
+                else {
+                    return `${previousExpression}+`;
+                }
+            });
         },
         '0': () => {
             setExpression(previousExpression => `${previousExpression}0`);
         },
         '.': () => {
-            setExpression(previousExpression => `${previousExpression}.`);
+            setExpression(previousExpression => {
+                if(button_categories[previousExpression.at(previousExpression.length - 1)] === 'operator') {
+                    return `${previousExpression}`;
+                }
+                else {
+                    return `${previousExpression}.`;
+                }
+            });
         },
         '=': () => {
             try {
                 let eval_expression = expression.replace('x', '*');
                 eval_expression = eval_expression.replace('÷', '/');
 
-                let result = eval(eval_expression);
-
-                // Convert a fractional number to 4 decimal places
-                if(result !== Math.floor(result)) {
-                    result = Math.round(result * 10000) / 10000;
+                // When no input is given and = button is pressed, we get NaN.
+                // This fixes this issue and does not produce any result.
+                if(expression !== '') {
+                    let result = eval(eval_expression);
+    
+                    // Convert a fractional number to 4 decimal places
+                    if(result !== Math.floor(result)) {
+                        result = Math.round(result * 10000) / 10000;
+                    }
+    
+                    setExpression(result);
                 }
-
-                setExpression(result);
             } catch(error) {
                 setExpression('Invalid');
             }
