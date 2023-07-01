@@ -139,6 +139,11 @@ export function Calculator() {
                     if(result !== Math.floor(result)) {
                         result = Math.round(result * 10000) / 10000;
                     }
+
+                    // The result produced by eval is a number (in this case).
+                    // But we want a string so that the other functionalities can work.
+                    // This is a blocker if omitted.
+                    result = result.toString();
     
                     setExpression(result);
                 }
