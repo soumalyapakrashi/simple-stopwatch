@@ -5,6 +5,7 @@ import './Calculator.css';
 export function Calculator() {
     const [ expression, setExpression ] = useState('');
     const [ symbolStack, setSymbolStack ] = useState(['Start']);
+    const [ errorButton, setErrorButton ] = useState('');
 
     const buttons = [ 'AC', 'C', '%', '÷', '7', '8', '9', 'X', '4', '5', '6', '-', '1', '2', '3', '+', '0', '.', '=' ];
 
@@ -34,6 +35,7 @@ export function Calculator() {
             stack = [...stack, 'Number'];
             return stack;
         });
+        setErrorButton('');
     }
 
     // Handler function for operators
@@ -57,12 +59,25 @@ export function Calculator() {
             }
             return stack;
         });
+
+        if(lastStackElement === 'Operator' || lastStackElement === 'Clear' || expression === '') {
+            if(operator === 'x') {
+                setErrorButton('X');
+            }
+            else {
+                setErrorButton(operator);
+            }
+        }
+        else {
+            setErrorButton('');
+        }
     }
 
     const buttons_map = {
         'AC': () => {
             setExpression('');
             setSymbolStack(['Start']);
+            setErrorButton('');
         },
         'C': () => {
             if(symbolStack[symbolStack.length - 1] === 'Clear') {
@@ -76,6 +91,7 @@ export function Calculator() {
                 setExpression(previousExpression => previousExpression.substring(0, previousExpression.length - 1));
                 setSymbolStack(stack => stack.slice(0, stack.length - 1));
             }
+            setErrorButton('');
         },
         '%': () => {
             operatorsHandler('%');
@@ -109,6 +125,7 @@ export function Calculator() {
             if(lastStackElement === 'Clear') {
                 setExpression('-');
                 setSymbolStack(['Start', 'Operator']);
+                setErrorButton('');
             }
             else {
                 setExpression(previousExpression => {
@@ -125,6 +142,10 @@ export function Calculator() {
                         stack = [...stack, 'Operator'];
                         return stack;
                     });
+                    setErrorButton('');
+                }
+                else {
+                    setErrorButton('-');
                 }
             }
         },
@@ -145,6 +166,7 @@ export function Calculator() {
             if(lastStackElement === 'Clear') {
                 setExpression('0');
                 setSymbolStack(['Start']);
+                setErrorButton('');
             }
             else if(lastStackElement === 'Start' || lastStackElement === 'Operator') {
                 setExpression(previousExpression => {
@@ -155,9 +177,17 @@ export function Calculator() {
                         return `${previousExpression}0`;
                     }
                 });
+
+                if(expression.at(expression.length - 1) === '0') {
+                    setErrorButton('0');
+                }
+                else {
+                    setErrorButton('');
+                }
             }
             else if(lastStackElement === 'Number' || lastStackElement === 'Point') {
                 setExpression(previousExpression => `${previousExpression}0`);
+                setErrorButton('');
             }
         },
         '.': () => {
@@ -174,6 +204,7 @@ export function Calculator() {
             if(lastStackElement === 'Clear') {
                 setExpression('.');
                 setSymbolStack(['Start', 'Point']);
+                setErrorButton('');
             }
             else if(!pointPresent) {
                 setExpression(previousExpression => {
@@ -186,6 +217,10 @@ export function Calculator() {
                 });
 
                 setSymbolStack(stack => [...stack, 'Point']);
+                setErrorButton('');
+            }
+            else if(pointPresent) {
+                setErrorButton('.');
             }
         },
         '=': () => {
@@ -233,6 +268,8 @@ export function Calculator() {
                     return stack;
                 });
             }
+
+            setErrorButton('');
         }
     }
 
@@ -317,14 +354,24 @@ export function Calculator() {
                 { buttons.map(key => {
                     let button_class = 'btn';
                     if(key === '÷' || key === 'X' || key === '-' || key === '+' || key === '=') {
-                        button_class += ' btn-orange';
+                        if(key === errorButton) {
+                            button_class += ' btn-orange-error';
+                        }
+                        else {
+                            button_class += ' btn-orange'
+                        }
                     }
                     else {
-                        button_class += ' btn-white';
+                        if(key === errorButton) {
+                            button_class += ' btn-white-error';
+                        }
+                        else {
+                            button_class += ' btn-white';
+                        }
                     }
 
                     return(
-                        <div className={ key === '0' ? 'grid-button-long' : '' } key={key}>
+                        <div className={ key === '0' ? 'grid-button-long' : '' } key={ key }>
                             <Button
                                 text={ key }
                                 displayChoice='text'
