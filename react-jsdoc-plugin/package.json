@@ -1,0 +1,11 @@
+{
+  "name": "react-jsdoc-plugin",
+  "version": "1.0.0",
+  "description": "A JSDoc plugin which adds React specific tags on top of JSDoc's default tags.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Soumalya Pakrashi",
+  "license": "ISC"
+}

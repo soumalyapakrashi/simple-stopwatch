@@ -7,6 +7,18 @@ import playLogo from '../../assets/svg/play-solid.svg';
 import pauseLogo from '../../assets/svg/pause-solid.svg';
 import stopLogo from '../../assets/svg/stop-solid.svg';
 
+/**
+ * @container StopWatch
+ * 
+ * @see component:Button
+ * @see component:Number
+ */
+
+/**
+ * A container to display stopwatch on the screen.
+ * @function StopWatch
+ * @memberof container:StopWatch
+ */
 export function StopWatch() {
     // Counter to count seconds in the stopwatch
     const [ seconds, setSeconds ] = useState(0);

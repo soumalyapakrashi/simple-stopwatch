@@ -15,7 +15,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "generate-docs": "node_modules\\.bin\\jsdoc src -r -c .\\jsdoc.json"
   },
   "eslintConfig": {
     "extends": [
@@ -34,5 +35,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "docdash": "^2.0.1",
+    "jsdoc": "^4.0.2"
   }
 }
