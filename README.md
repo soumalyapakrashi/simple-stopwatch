@@ -15,11 +15,11 @@ A simple **StopWatch** app which has a *Start*, *Pause* and *Stop* feature. It c
 
 The following is a sample screen from the app when it is stopped:
 
-![Sample Screenshot](./src/assets/img/app_screenshot.jpg)
+![Sample Screenshot](./src/assets/img/readme_stopwatch_stopped.jpg)
 
 The following is a sample screen from the app when it is running:
 
-![Sample Screenshot Running](./src//assets//img/app_screenshot_started.jpg)
+![Sample Screenshot Running](./src//assets//img/readme_stopwatch_started.jpg)
 
 ## Calculator
 
