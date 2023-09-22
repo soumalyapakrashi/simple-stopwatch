@@ -1,0 +1,24 @@
+{
+    "opts": {
+        "template": "./docdash-custom",
+        "destination": "./documentation"
+    },
+    "tags": {
+        "allowUnknownTags": [
+            "component",
+            "container"
+        ]
+    },
+    "plugins": [
+        "react-jsdoc-plugin"
+    ],
+    "docdash": {
+        "search": true,
+        "menu": {
+            "About": {
+                "class": "menu-item",
+                "id": "about-section"
+            }
+        }
+    }
+}
